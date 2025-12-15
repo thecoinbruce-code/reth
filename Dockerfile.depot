@@ -62,8 +62,7 @@ RUN --mount=type=cache,target=/usr/local/cargo/registry,sharing=locked \
 RUN cp /app/target/$BUILD_PROFILE/$BINARY /app/binary || \
     cp /app/target/release/$BINARY /app/binary
 
-# Use Ubuntu as the release image
-FROM ubuntu:22.04 AS runtime
+FROM ubuntu:24.04 AS runtime
 WORKDIR /app
 
 # Binary name for entrypoint
