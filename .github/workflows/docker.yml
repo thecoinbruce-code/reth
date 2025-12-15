@@ -30,45 +30,13 @@ on:
         default: false
 
 jobs:
-  prepare:
-    name: Prepare build parameters
-    runs-on: ubuntu-24.04
-    outputs:
-      build_matrix: ${{ steps.set-matrix.outputs.matrix }}
-    steps:
-      - name: Determine build matrix
-        id: set-matrix
-        run: |
-          # Base builds (always included)
-          BUILDS='[
-            {"binary": "reth", "image_name": "ghcr.io/${{ github.repository_owner }}/reth", "manifest_path": "bin/reth", "features": "jemalloc asm-keccak", "profile": "maxperf"},
-            {"binary": "op-reth", "image_name": "ghcr.io/${{ github.repository_owner }}/op-reth", "manifest_path": "crates/optimism/bin", "features": "jemalloc asm-keccak", "profile": "maxperf"}
-          ]'
-
-          # Add profiling builds for nightly
-          if [[ "${{ github.event_name }}" == "schedule" ]] || [[ "${{ github.event_name }}" == "workflow_dispatch" && "${{ inputs.build_type }}" == "nightly" ]]; then
-            BUILDS='[
-              {"binary": "reth", "image_name": "ghcr.io/${{ github.repository_owner }}/reth", "manifest_path": "bin/reth", "features": "jemalloc asm-keccak", "profile": "maxperf", "tag_suffix": "nightly"},
-              {"binary": "reth", "image_name": "ghcr.io/${{ github.repository_owner }}/reth", "manifest_path": "bin/reth", "features": "jemalloc asm-keccak jemalloc-prof", "profile": "profiling", "tag_suffix": "nightly-profiling"},
-              {"binary": "op-reth", "image_name": "ghcr.io/${{ github.repository_owner }}/op-reth", "manifest_path": "crates/optimism/bin", "features": "jemalloc asm-keccak", "profile": "maxperf", "tag_suffix": "nightly"},
-              {"binary": "op-reth", "image_name": "ghcr.io/${{ github.repository_owner }}/op-reth", "manifest_path": "crates/optimism/bin", "features": "jemalloc asm-keccak jemalloc-prof", "profile": "profiling", "tag_suffix": "nightly-profiling"}
-            ]'
-          fi
-
-          echo "matrix=$BUILDS" >> "$GITHUB_OUTPUT"
-
   build:
-    name: Build ${{ matrix.binary }} (${{ matrix.profile }})
-    needs: prepare
+    name: Build Docker images
     runs-on: ubuntu-24.04
     permissions:
       packages: write
       contents: read
       id-token: write
-    strategy:
-      fail-fast: false
-      matrix:
-        include: ${{ fromJson(needs.prepare.outputs.build_matrix) }}
     steps:
       - uses: actions/checkout@v6
 
@@ -82,47 +50,43 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Compute tags
-        id: tags
+      - name: Determine build parameters
+        id: params
         run: |
-          IMAGE="${{ matrix.image_name }}"
-          TAGS=""
+          REGISTRY="ghcr.io/${{ github.repository_owner }}"
 
           if [[ "${{ github.event_name }}" == "push" ]]; then
-            # Tag push - extract version
             VERSION="${GITHUB_REF#refs/tags/}"
-            TAGS="${IMAGE}:${VERSION}"
+            echo "targets=ethereum optimism" >> "$GITHUB_OUTPUT"
+
             # Add 'latest' tag for non-RC releases
             if [[ ! "$VERSION" =~ -rc ]]; then
-              TAGS="${TAGS},${IMAGE}:latest"
-            fi
-
-          elif [[ "${{ github.event_name }}" == "schedule" ]]; then
-            # Scheduled nightly build
-            TAGS="${IMAGE}:${{ matrix.tag_suffix }}"
-
-          elif [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            if [[ "${{ inputs.build_type }}" == "nightly" ]]; then
-              TAGS="${IMAGE}:${{ matrix.tag_suffix }}"
+              echo "ethereum_tags=${REGISTRY}/reth:${VERSION},${REGISTRY}/reth:latest" >> "$GITHUB_OUTPUT"
+              echo "optimism_tags=${REGISTRY}/op-reth:${VERSION},${REGISTRY}/op-reth:latest" >> "$GITHUB_OUTPUT"
             else
-              # git-sha build
-              TAGS="${IMAGE}:${{ github.sha }}"
+              echo "ethereum_tags=${REGISTRY}/reth:${VERSION}" >> "$GITHUB_OUTPUT"
+              echo "optimism_tags=${REGISTRY}/op-reth:${VERSION}" >> "$GITHUB_OUTPUT"
             fi
+
+          elif [[ "${{ github.event_name }}" == "schedule" ]] || [[ "${{ inputs.build_type }}" == "nightly" ]]; then
+            echo "targets=nightly" >> "$GITHUB_OUTPUT"
+            echo "ethereum_tags=${REGISTRY}/reth:nightly" >> "$GITHUB_OUTPUT"
+            echo "optimism_tags=${REGISTRY}/op-reth:nightly" >> "$GITHUB_OUTPUT"
+
+          else
+            # git-sha build
+            echo "targets=ethereum optimism" >> "$GITHUB_OUTPUT"
+            echo "ethereum_tags=${REGISTRY}/reth:${{ github.sha }}" >> "$GITHUB_OUTPUT"
+            echo "optimism_tags=${REGISTRY}/op-reth:${{ github.sha }}" >> "$GITHUB_OUTPUT"
           fi
 
-          echo "tags=$TAGS" >> "$GITHUB_OUTPUT"
-
-      - name: Build and push ${{ matrix.binary }} image
-        uses: depot/build-push-action@v1
+      - name: Build and push images
+        uses: depot/bake-action@v1
         with:
           project: ${{ vars.DEPOT_PROJECT_ID }}
-          context: .
-          file: Dockerfile.depot
-          platforms: linux/amd64,linux/arm64
+          files: docker-bake.hcl
+          targets: ${{ steps.params.outputs.targets }}
           push: ${{ !(github.event_name == 'workflow_dispatch' && inputs.dry_run) }}
-          tags: ${{ steps.tags.outputs.tags }}
-          build-args: |
-            BINARY=${{ matrix.binary }}
-            MANIFEST_PATH=${{ matrix.manifest_path }}
-            BUILD_PROFILE=${{ matrix.profile }}
-            FEATURES=${{ matrix.features }}
+          set: |
+            ethereum.tags=${{ steps.params.outputs.ethereum_tags }}
+            optimism.tags=${{ steps.params.outputs.optimism_tags }}
