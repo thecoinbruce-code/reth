@@ -7,7 +7,13 @@ sim="${1}"
 limit="${2}"
 
 run_hive() {
-    hive --sim "${sim}" --sim.limit "${limit}" --sim.parallelism 16 --client reth 2>&1 | tee /tmp/log || true
+    # Use lower parallelism for EELS tests to avoid OOM on runners
+    if [[ "${sim}" == *"eels"* ]]; then
+        parallelism=4
+    else
+        parallelism=16
+    fi
+    hive --sim "${sim}" --sim.limit "${limit}" --sim.parallelism "${parallelism}" --client reth 2>&1 | tee /tmp/log || true
 }
 
 check_log() {
