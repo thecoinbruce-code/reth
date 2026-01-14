@@ -407,7 +407,6 @@ impl<TX: DbTx + DbTxMut + 'static, N: NodeTypesForProvider> DatabaseProvider<TX,
             first_block_number: first_block,
             prune_tx_lookup: self.prune_modes.transaction_lookup,
             storage_settings: self.cached_storage_settings(),
-            pending_batches: self.pending_rocksdb_batches.clone(),
         }
     }
 
@@ -474,8 +473,9 @@ impl<TX: DbTx + DbTxMut + 'static, N: NodeTypesForProvider> DatabaseProvider<TX,
             let rocksdb_handle = rocksdb_ctx.storage_settings.any_in_rocksdb().then(|| {
                 s.spawn(|| {
                     let start = Instant::now();
-                    rocksdb_provider.write_blocks_data(&blocks, &tx_nums, rocksdb_ctx)?;
-                    Ok::<_, ProviderError>(start.elapsed())
+                    let batch =
+                        rocksdb_provider.write_blocks_data(&blocks, &tx_nums, rocksdb_ctx)?;
+                    Ok::<_, ProviderError>((start.elapsed(), batch))
                 })
             });
 
@@ -545,7 +545,11 @@ impl<TX: DbTx + DbTxMut + 'static, N: NodeTypesForProvider> DatabaseProvider<TX,
             // Wait for RocksDB thread
             #[cfg(all(unix, feature = "rocksdb"))]
             if let Some(handle) = rocksdb_handle {
-                timings.rocksdb = handle.join().expect("RocksDB thread panicked")?;
+                let (elapsed, batch) = handle.join().expect("RocksDB thread panicked")?;
+                timings.rocksdb = elapsed;
+                if let Some(batch) = batch {
+                    self.set_pending_rocksdb_batch(batch);
+                }
             }
             #[cfg(not(all(unix, feature = "rocksdb")))]
             let _ = rocksdb_handle;
