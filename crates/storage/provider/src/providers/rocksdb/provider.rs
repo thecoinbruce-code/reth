@@ -29,17 +29,17 @@ use std::{
     time::Instant,
 };
 
-/// Pending RocksDB batches type alias.
-pub type PendingRocksDBBatches = Arc<Mutex<Vec<WriteBatchWithTransaction<true>>>>;
+/// Pending `RocksDB` batches type alias.
+pub(crate) type PendingRocksDBBatches = Arc<Mutex<Vec<WriteBatchWithTransaction<true>>>>;
 
-/// Context for RocksDB block writes.
+/// Context for `RocksDB` block writes.
 #[derive(Clone)]
-pub struct RocksDBWriteCtx {
+pub(crate) struct RocksDBWriteCtx {
     /// The first block number being written.
     pub first_block_number: BlockNumber,
     /// The prune mode for transaction lookup, if any.
     pub prune_tx_lookup: Option<PruneMode>,
-    /// Storage settings determining what goes to RocksDB.
+    /// Storage settings determining what goes to `RocksDB`.
     pub storage_settings: StorageSettings,
     /// Pending batches to push to after writing.
     pub pending_batches: PendingRocksDBBatches,
@@ -509,12 +509,12 @@ impl RocksDBProvider {
         })
     }
 
-    /// Writes all RocksDB data for multiple blocks in parallel.
+    /// Writes all `RocksDB` data for multiple blocks in parallel.
     ///
     /// This handles transaction hash numbers, account history, and storage history based on
     /// the provided storage settings. Each operation runs in parallel with its own batch,
     /// pushing to `ctx.pending_batches` for later commit.
-    pub fn write_blocks_data<N: reth_node_types::NodePrimitives>(
+    pub(crate) fn write_blocks_data<N: reth_node_types::NodePrimitives>(
         &self,
         blocks: &[ExecutedBlock<N>],
         tx_nums: &[TxNumber],
@@ -584,7 +584,7 @@ impl RocksDBProvider {
         for (block_idx, block) in blocks.iter().enumerate() {
             let block_number = ctx.first_block_number + block_idx as u64;
             let bundle = &block.execution_outcome().bundle;
-            for (&address, _) in bundle.state() {
+            for &address in bundle.state().keys() {
                 account_history.entry(address).or_default().push(block_number);
             }
         }
@@ -609,7 +609,7 @@ impl RocksDBProvider {
             let block_number = ctx.first_block_number + block_idx as u64;
             let bundle = &block.execution_outcome().bundle;
             for (&address, account) in bundle.state() {
-                for (&slot, _) in &account.storage {
+                for &slot in account.storage.keys() {
                     let key = B256::new(slot.to_be_bytes());
                     storage_history.entry((address, key)).or_default().push(block_number);
                 }
