@@ -407,6 +407,7 @@ impl<TX: DbTx + DbTxMut + 'static, N: NodeTypesForProvider> DatabaseProvider<TX,
             first_block_number: first_block,
             prune_tx_lookup: self.prune_modes.transaction_lookup,
             storage_settings: self.cached_storage_settings(),
+            pending_batches: self.pending_rocksdb_batches.clone(),
         }
     }
 
