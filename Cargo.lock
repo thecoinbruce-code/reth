@@ -6891,6 +6891,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "permia-services"
+version = "0.1.0"
+dependencies = [
+ "alloy-primitives",
+ "serde",
+ "sha3",
+ "thiserror 2.0.17",
+]
+
+[[package]]
 name = "pest"
 version = "2.8.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
