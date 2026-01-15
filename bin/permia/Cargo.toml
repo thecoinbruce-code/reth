@@ -12,19 +12,13 @@ workspace = true
 [dependencies]
 # Permia crates
 permia-node = { path = "../../crates/permia/node" }
-permia-consensus = { path = "../../crates/permia/consensus" }
 permia-cli = { path = "../../crates/permia/cli" }
 permia-miner = { path = "../../crates/permia/miner" }
 
 # Reth dependencies
-reth-chainspec = { path = "../../crates/chainspec" }
 reth-cli-util.workspace = true
-reth-cli-runner.workspace = true
-reth-node-builder.workspace = true
-reth-node-core.workspace = true
 reth-node-ethereum.workspace = true
 reth-ethereum-cli.workspace = true
-reth-ethereum-primitives.workspace = true
 
 # Alloy
 alloy-primitives.workspace = true
@@ -36,10 +30,7 @@ clap = { workspace = true, features = ["derive", "env"] }
 tracing.workspace = true
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 
-# Async
-tokio = { workspace = true, features = ["sync", "macros", "time", "rt-multi-thread"] }
-
-# Error handling
+# Utilities
 eyre.workspace = true
 num_cpus = "1.16"
 
