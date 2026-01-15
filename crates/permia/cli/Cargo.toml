@@ -1,0 +1,16 @@
+[package]
+name = "permia-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Permia CLI utilities"
+
+[dependencies]
+# Reth
+reth-chainspec = { path = "../../chainspec" }
+reth-cli = { path = "../../cli/cli" }
+
+# Error handling
+eyre.workspace = true
+
+[dev-dependencies]

@@ -6787,11 +6787,17 @@ dependencies = [
  "alloy-primitives",
  "clap",
  "eyre",
+ "permia-cli",
  "permia-consensus",
  "permia-node",
  "reth-chainspec",
+ "reth-cli-runner",
  "reth-cli-util",
+ "reth-ethereum-cli",
+ "reth-ethereum-primitives",
  "reth-node-builder",
+ "reth-node-core",
+ "reth-node-ethereum",
  "tokio",
  "tracing",
  "tracing-subscriber 0.3.22",
@@ -6808,6 +6814,15 @@ dependencies = [
  "reth-primitives-traits",
  "serde",
  "serde_json",
+]
+
+[[package]]
+name = "permia-cli"
+version = "0.1.0"
+dependencies = [
+ "eyre",
+ "reth-chainspec",
+ "reth-cli",
 ]
 
 [[package]]
