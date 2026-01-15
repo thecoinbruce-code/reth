@@ -13,7 +13,9 @@ workspace = true
 # Permia crates
 permia-node = { path = "../../crates/permia/node" }
 permia-consensus = { path = "../../crates/permia/consensus" }
-permia-chainspec = { path = "../../crates/permia/chainspec" }
+
+# Reth chainspec with Permia support
+reth-chainspec = { path = "../../crates/chainspec" }
 
 # Reth dependencies
 reth-cli-util.workspace = true

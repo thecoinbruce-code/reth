@@ -5,8 +5,9 @@
 #![allow(missing_docs)]
 
 use clap::Parser;
-use permia_chainspec::{PERMIA_DEVNET, PERMIA_MAINNET, PERMIA_TESTNET};
+use reth_chainspec::{PERMIA_DEV, PERMIA_MAINNET, PERMIA_TESTNET, ChainSpec};
 use permia_node::PermiaConsensusBuilder;
+use std::sync::Arc;
 use tracing::info;
 
 /// Permia node CLI
@@ -49,10 +50,10 @@ fn main() {
     let cli = Cli::parse();
     
     // Select chain spec based on network
-    let chain_spec = match cli.network.as_str() {
-        "mainnet" | "main" => &*PERMIA_MAINNET,
-        "testnet" | "test" => &*PERMIA_TESTNET,
-        "dev" | "devnet" => &*PERMIA_DEVNET,
+    let chain_spec: Arc<ChainSpec> = match cli.network.as_str() {
+        "mainnet" | "main" => PERMIA_MAINNET.clone(),
+        "testnet" | "test" => PERMIA_TESTNET.clone(),
+        "dev" | "devnet" => PERMIA_DEV.clone(),
         _ => {
             eprintln!("Unknown network: {}. Use: mainnet, testnet, or dev", cli.network);
             std::process::exit(1);
@@ -61,8 +62,7 @@ fn main() {
     
     info!(
         target: "permia",
-        chain_id = chain_spec.chain_id,
-        network = chain_spec.name,
+        chain_id = chain_spec.chain.id(),
         "Starting Permia node"
     );
     

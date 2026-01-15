@@ -6787,9 +6787,9 @@ dependencies = [
  "alloy-primitives",
  "clap",
  "eyre",
- "permia-chainspec",
  "permia-consensus",
  "permia-node",
+ "reth-chainspec",
  "reth-cli-util",
  "reth-node-builder",
  "tokio",
@@ -6826,22 +6826,9 @@ dependencies = [
 name = "permia-node"
 version = "0.1.0"
 dependencies = [
- "alloy-consensus",
  "alloy-primitives",
- "eyre",
- "permia-chainspec",
  "permia-consensus",
- "reth-chainspec",
- "reth-consensus",
- "reth-ethereum-primitives",
- "reth-evm",
- "reth-node-api",
- "reth-node-builder",
- "reth-primitives-traits",
- "reth-revm",
- "thiserror 2.0.17",
  "tokio",
- "tracing",
 ]
 
 [[package]]

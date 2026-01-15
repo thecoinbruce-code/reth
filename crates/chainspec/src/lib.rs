@@ -16,6 +16,13 @@ mod constants;
 pub use constants::*;
 
 mod api;
+
+/// Permia chain specifications
+pub mod permia;
+pub use permia::{
+    permia_chain_spec, permia_chain_spec_by_name, PERMIA_DEV, PERMIA_MAINNET, PERMIA_TESTNET,
+    PERMIA_DEVNET_CHAIN_ID, PERMIA_MAINNET_CHAIN_ID, PERMIA_TESTNET_CHAIN_ID, PERMIA_BLOCK_TIME_MS,
+};
 /// The chain info module.
 mod info;
 /// The chain spec module.
