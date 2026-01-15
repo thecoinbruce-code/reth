@@ -19,8 +19,11 @@ pub const PERMIA_TESTNET_CHAIN_ID: u64 = 42070;
 /// Permia devnet chain ID
 pub const PERMIA_DEVNET_CHAIN_ID: u64 = 42071;
 
-/// Target block time in milliseconds
+/// Target block time in milliseconds (400ms = 2.5 blocks/second)
 pub const BLOCK_TIME_MS: u64 = 400;
+
+/// Target block time as Duration
+pub const BLOCK_TIME: std::time::Duration = std::time::Duration::from_millis(BLOCK_TIME_MS);
 
 /// Maximum block gas limit
 pub const MAX_BLOCK_GAS: u64 = 60_000_000;

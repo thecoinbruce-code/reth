@@ -34,7 +34,7 @@ echo "Permia Devnet Multi-Node Test (P2P Sync)"
 echo "=========================================="
 echo ""
 echo "Configuration:"
-echo "  - Node 1: Miner (produces blocks every 1s)"
+echo "  - Node 1: Miner (produces blocks every 400ms - Permia spec)"
 echo "  - Node 2: Syncs from Node 1 via P2P"
 echo "  - Chain: Permia Devnet (ID: 42071)"
 
@@ -43,7 +43,7 @@ echo ""
 echo "[Node 1] Starting miner on port 30303..."
 $PERMIA_BIN node \
     --dev \
-    --dev.block-time 1s \
+    --dev.block-time 400ms \
     --datadir "$NODE1_DIR" \
     --http --http.port 8545 \
     --authrpc.port 8551 \
