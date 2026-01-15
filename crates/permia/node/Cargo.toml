@@ -16,9 +16,19 @@ reth-node-builder = { path = "../../node/builder" }
 reth-node-api = { path = "../../node/api" }
 reth-primitives-traits = { path = "../../primitives-traits" }
 reth-ethereum-primitives = { path = "../../ethereum/primitives" }
+reth-node-ethereum = { path = "../../ethereum/node" }
+reth-provider = { path = "../../storage/provider" }
+reth-transaction-pool = { path = "../../transaction-pool" }
+reth-network = { path = "../../net/network" }
+reth-payload-primitives = { path = "../../payload/primitives" }
+reth-ethereum-engine-primitives = { path = "../../ethereum/engine-primitives" }
+reth-engine-local = { path = "../../engine/local" }
+reth-evm = { path = "../../evm/evm" }
+reth-tracing = { path = "../../tracing" }
 
 # Alloy
 alloy-primitives.workspace = true
+alloy-rpc-types-eth.workspace = true
 
 # Utilities
 eyre.workspace = true
