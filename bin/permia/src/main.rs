@@ -18,6 +18,7 @@
 
 use clap::Parser;
 use permia_cli::PermiaChainSpecParser;
+use permia_gossip::spawn_block_announcer;
 use permia_node::{PermiaConsensusBuilder, PermiaNetworkBuilder};
 use reth_ethereum_cli::Cli;
 use reth_node_builder::Node;
@@ -66,6 +67,14 @@ fn main() {
                 chain_id = %handle.node.chain_spec().chain.id(),
                 "Permia node running with PermiaHash P2P validation"
             );
+            
+            // Spawn block announcer to broadcast mined blocks to peers
+            let network = handle.node.network.clone();
+            let provider = handle.node.provider.clone();
+            handle.node.task_executor.spawn_critical("permia-block-announcer", Box::pin(async move {
+                info!(target: "permia::cli", "Starting block announcer for P2P propagation");
+                spawn_block_announcer(network, provider).await;
+            }));
             
             handle.wait_for_node_exit().await
         })

@@ -14,9 +14,11 @@ workspace = true
 permia-node = { path = "../../crates/permia/node" }
 permia-cli = { path = "../../crates/permia/cli" }
 permia-miner = { path = "../../crates/permia/miner" }
+permia-gossip = { path = "../../crates/permia/gossip" }
 
 # Reth dependencies
 reth-cli-util.workspace = true
+reth-chain-state.workspace = true
 reth-node-builder.workspace = true
 reth-node-ethereum.workspace = true
 reth-ethereum-cli.workspace = true

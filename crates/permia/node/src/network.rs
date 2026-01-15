@@ -49,7 +49,13 @@ where
         // Set up PermiaPoWBlockImport for P2P block validation
         let provider = ctx.provider().clone();
         let block_import = Box::new(PermiaPoWBlockImport::new(provider));
-        let network_config_builder = network_config_builder.block_import(block_import);
+        
+        // Configure for PoW mode:
+        // - Enable block propagation via NewBlock messages
+        // - Use PermiaPoWBlockImport for incoming block validation
+        let network_config_builder = network_config_builder
+            .with_pow()  // Enable PoW mode - allows block propagation
+            .block_import(block_import);
         
         // Build the network config
         let network_config = ctx.build_network_config(network_config_builder);
@@ -61,7 +67,7 @@ where
         info!(
             target: "permia::network",
             enode = %handle.local_node_record(),
-            "Permia P2P network initialized with PermiaHash PoW validation"
+            "Permia P2P network initialized with PoW mode and PermiaHash validation"
         );
         
         Ok(handle)
