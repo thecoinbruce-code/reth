@@ -183,6 +183,7 @@ members = [
     "crates/permia/chainspec",
     "crates/permia/node",
     "crates/permia/cli",
+    "crates/permia/miner",
     "bin/permia",
 ]
 default-members = ["bin/reth"]

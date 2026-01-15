@@ -14,6 +14,7 @@ workspace = true
 permia-node = { path = "../../crates/permia/node" }
 permia-consensus = { path = "../../crates/permia/consensus" }
 permia-cli = { path = "../../crates/permia/cli" }
+permia-miner = { path = "../../crates/permia/miner" }
 
 # Reth dependencies
 reth-chainspec = { path = "../../crates/chainspec" }
@@ -40,6 +41,7 @@ tokio = { workspace = true, features = ["sync", "macros", "time", "rt-multi-thre
 
 # Error handling
 eyre.workspace = true
+num_cpus = "1.16"
 
 [features]
 default = []
@@ -47,3 +49,7 @@ default = []
 [[bin]]
 name = "permia"
 path = "src/main.rs"
+
+[[bin]]
+name = "permia-mine"
+path = "src/bin/permia-mine.rs"

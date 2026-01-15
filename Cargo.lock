@@ -6787,8 +6787,10 @@ dependencies = [
  "alloy-primitives",
  "clap",
  "eyre",
+ "num_cpus",
  "permia-cli",
  "permia-consensus",
+ "permia-miner",
  "permia-node",
  "reth-chainspec",
  "reth-cli-runner",
@@ -6840,6 +6842,22 @@ dependencies = [
  "reth-primitives-traits",
  "sha3",
  "thiserror 2.0.17",
+]
+
+[[package]]
+name = "permia-miner"
+version = "0.1.0"
+dependencies = [
+ "alloy-consensus",
+ "alloy-primitives",
+ "num_cpus",
+ "permia-consensus",
+ "rand 0.8.5",
+ "reth-chainspec",
+ "reth-primitives-traits",
+ "thiserror 2.0.17",
+ "tokio",
+ "tracing",
 ]
 
 [[package]]
