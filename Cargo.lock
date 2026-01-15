@@ -6793,6 +6793,7 @@ dependencies = [
  "permia-node",
  "reth-cli-util",
  "reth-ethereum-cli",
+ "reth-node-builder",
  "reth-node-ethereum",
  "tracing",
  "tracing-subscriber 0.3.22",

@@ -9,13 +9,18 @@
 //!
 //! When running with `--dev`, the node will automatically mine blocks
 //! at regular intervals using Reth's LocalMiner infrastructure.
+//!
+//! # P2P Block Validation
+//!
+//! Incoming blocks from peers are validated using PermiaHash PoW before import.
 
 #![allow(missing_docs)]
 
 use clap::Parser;
 use permia_cli::PermiaChainSpecParser;
-use permia_node::PermiaConsensusBuilder;
+use permia_node::{PermiaConsensusBuilder, PermiaNetworkBuilder};
 use reth_ethereum_cli::Cli;
+use reth_node_builder::Node;
 use reth_node_ethereum::EthereumNode;
 use tracing::info;
 
@@ -42,20 +47,24 @@ fn main() {
                 "PermiaHash consensus initialized"
             );
             
-            // Use EthereumNode as base with debug capabilities for dev mode
-            // This enables LocalMiner when --dev flag is passed, which:
-            // - Builds payloads via PayloadBuilder
-            // - Submits blocks via Engine API (newPayload + forkchoiceUpdated)
-            // - Persists blocks to the chain database
+            // Use EthereumNode as base with Permia's custom network builder
+            // - PermiaNetworkBuilder validates incoming P2P blocks with PermiaHash PoW
+            // - LocalMiner is enabled in dev mode (--dev flag)
+            // - Blocks are submitted via Engine API
             let handle = builder
-                .node(EthereumNode::default())
+                .with_types::<EthereumNode>()
+                .with_components(
+                    EthereumNode::components()
+                        .network(PermiaNetworkBuilder::default())
+                )
+                .with_add_ons(EthereumNode::default().add_ons())
                 .launch_with_debug_capabilities()
                 .await?;
             
             info!(
                 target: "permia::cli",
                 chain_id = %handle.node.chain_spec().chain.id(),
-                "Permia node running"
+                "Permia node running with PermiaHash P2P validation"
             );
             
             handle.wait_for_node_exit().await

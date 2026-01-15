@@ -22,7 +22,7 @@ pub mod network;
 pub mod node;
 
 pub use consensus::PermiaConsensusBuilder;
-pub use network::configure_permia_network;
+pub use network::{configure_permia_network, PermiaNetworkBuilder};
 pub use node::PermiaNode;
 pub use permia_consensus::{PermiaConsensus, PermiaConsensusError, PermiaPoWConsensus, BLOCK_TIME_MS};
 
