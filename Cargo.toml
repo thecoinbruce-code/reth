@@ -1,10 +1,10 @@
 [workspace.package]
-version = "1.9.3"
+version = "0.1.0"
 edition = "2024"
 rust-version = "1.88"
 license = "MIT OR Apache-2.0"
-homepage = "https://paradigmxyz.github.io/reth"
-repository = "https://github.com/paradigmxyz/reth"
+homepage = "https://permia.network"
+repository = "https://github.com/thecoinbruce-code/permia"
 exclude = [".github/"]
 
 [workspace]
@@ -178,6 +178,9 @@ members = [
     "testing/testing-utils",
     "testing/runner",
     "crates/tracing-otlp",
+    # Permia-specific crates
+    "crates/permia/consensus",
+    "crates/permia/chainspec",
 ]
 default-members = ["bin/reth"]
 exclude = ["docs/cli"]
