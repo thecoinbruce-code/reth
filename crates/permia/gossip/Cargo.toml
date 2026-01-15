@@ -1,0 +1,33 @@
+[package]
+name = "permia-gossip"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Permia P2P block gossip with PermiaHash PoW validation"
+
+[lints]
+workspace = true
+
+[dependencies]
+# Permia
+permia-consensus = { path = "../consensus" }
+
+# Reth
+reth-consensus = { path = "../../consensus/consensus" }
+reth-eth-wire = { path = "../../net/eth-wire" }
+reth-network = { path = "../../net/network" }
+reth-network-peers = { path = "../../net/peers" }
+reth-primitives-traits = { path = "../../primitives-traits" }
+reth-provider = { path = "../../storage/provider" }
+
+# Alloy
+alloy-primitives.workspace = true
+
+# Tracing
+tracing.workspace = true
+
+# Error handling
+thiserror.workspace = true
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["rt-multi-thread", "macros"] }

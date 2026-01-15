@@ -6866,6 +6866,23 @@ dependencies = [
 ]
 
 [[package]]
+name = "permia-gossip"
+version = "0.1.0"
+dependencies = [
+ "alloy-primitives",
+ "permia-consensus",
+ "reth-consensus",
+ "reth-eth-wire",
+ "reth-network",
+ "reth-network-peers",
+ "reth-primitives-traits",
+ "reth-provider",
+ "thiserror 2.0.17",
+ "tokio",
+ "tracing",
+]
+
+[[package]]
 name = "permia-miner"
 version = "0.1.0"
 dependencies = [
