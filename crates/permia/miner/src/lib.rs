@@ -35,9 +35,11 @@
 
 pub mod worker;
 pub mod template;
+pub mod node_miner;
 
 pub use worker::{MiningWorker, MiningResult, MiningConfig};
 pub use template::BlockTemplate;
+pub use node_miner::{NodeMiner, NodeMinerConfig, NodeMinerHandle, MinedBlock, spawn_node_miner};
 
 use alloy_primitives::U256;
 use thiserror::Error;
