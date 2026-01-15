@@ -8,6 +8,7 @@ description = "Permia node implementation"
 [dependencies]
 # Permia crates
 permia-consensus = { path = "../consensus" }
+permia-gossip = { path = "../gossip" }
 
 # Reth
 reth-chainspec = { path = "../../chainspec" }
@@ -20,6 +21,7 @@ reth-node-ethereum = { path = "../../ethereum/node" }
 reth-provider = { path = "../../storage/provider" }
 reth-transaction-pool = { path = "../../transaction-pool" }
 reth-network = { path = "../../net/network" }
+reth-eth-wire = { path = "../../net/eth-wire" }
 reth-payload-primitives = { path = "../../payload/primitives" }
 reth-ethereum-engine-primitives = { path = "../../ethereum/engine-primitives" }
 reth-engine-local = { path = "../../engine/local" }
