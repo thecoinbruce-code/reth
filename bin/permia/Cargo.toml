@@ -1,0 +1,43 @@
+[package]
+name = "permia"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Permia blockchain node"
+default-run = "permia"
+
+[lints]
+workspace = true
+
+[dependencies]
+# Permia crates
+permia-node = { path = "../../crates/permia/node" }
+permia-consensus = { path = "../../crates/permia/consensus" }
+permia-chainspec = { path = "../../crates/permia/chainspec" }
+
+# Reth dependencies
+reth-cli-util.workspace = true
+reth-node-builder.workspace = true
+
+# Alloy
+alloy-primitives.workspace = true
+
+# CLI
+clap = { workspace = true, features = ["derive", "env"] }
+
+# Tracing
+tracing.workspace = true
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Async
+tokio = { workspace = true, features = ["sync", "macros", "time", "rt-multi-thread"] }
+
+# Error handling
+eyre.workspace = true
+
+[features]
+default = []
+
+[[bin]]
+name = "permia"
+path = "src/main.rs"

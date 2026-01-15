@@ -181,6 +181,8 @@ members = [
     # Permia-specific crates
     "crates/permia/consensus",
     "crates/permia/chainspec",
+    "crates/permia/node",
+    "bin/permia",
 ]
 default-members = ["bin/reth"]
 exclude = ["docs/cli"]

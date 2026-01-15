@@ -6781,6 +6781,23 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9b4f627cb1b25917193a259e49bdad08f671f8d9708acfd5fe0a8c1455d87220"
 
 [[package]]
+name = "permia"
+version = "0.1.0"
+dependencies = [
+ "alloy-primitives",
+ "clap",
+ "eyre",
+ "permia-chainspec",
+ "permia-consensus",
+ "permia-node",
+ "reth-cli-util",
+ "reth-node-builder",
+ "tokio",
+ "tracing",
+ "tracing-subscriber 0.3.22",
+]
+
+[[package]]
 name = "permia-chainspec"
 version = "0.1.0"
 dependencies = [
@@ -6803,6 +6820,28 @@ dependencies = [
  "proptest",
  "sha3",
  "thiserror 2.0.17",
+]
+
+[[package]]
+name = "permia-node"
+version = "0.1.0"
+dependencies = [
+ "alloy-consensus",
+ "alloy-primitives",
+ "eyre",
+ "permia-chainspec",
+ "permia-consensus",
+ "reth-chainspec",
+ "reth-consensus",
+ "reth-ethereum-primitives",
+ "reth-evm",
+ "reth-node-api",
+ "reth-node-builder",
+ "reth-primitives-traits",
+ "reth-revm",
+ "thiserror 2.0.17",
+ "tokio",
+ "tracing",
 ]
 
 [[package]]

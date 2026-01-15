@@ -1,0 +1,33 @@
+[package]
+name = "permia-node"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Permia node implementation"
+
+[dependencies]
+# Permia crates
+permia-consensus = { path = "../consensus" }
+permia-chainspec = { path = "../chainspec" }
+
+# Reth dependencies
+reth-chainspec.workspace = true
+reth-consensus.workspace = true
+reth-primitives-traits.workspace = true
+reth-node-builder.workspace = true
+reth-node-api.workspace = true
+reth-evm.workspace = true
+reth-revm.workspace = true
+reth-ethereum-primitives.workspace = true
+
+# Alloy
+alloy-primitives.workspace = true
+alloy-consensus.workspace = true
+
+# Utilities
+eyre.workspace = true
+tracing.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["rt-multi-thread", "macros"] }
