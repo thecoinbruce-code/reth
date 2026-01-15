@@ -6,6 +6,9 @@
 
 pub mod pow;
 pub mod difficulty;
+pub mod reth;
+
+pub use reth::PermiaPoWConsensus;
 
 use alloy_consensus::Header;
 use alloy_primitives::U256;

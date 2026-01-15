@@ -10,6 +10,13 @@ description = "Permia consensus implementation (PermiaHash PoW + BFT)"
 alloy-primitives.workspace = true
 alloy-consensus.workspace = true
 
+# Reth
+reth-chainspec = { path = "../../chainspec" }
+reth-consensus = { path = "../../consensus/consensus" }
+reth-consensus-common = { path = "../../consensus/common" }
+reth-primitives-traits = { path = "../../primitives-traits" }
+reth-execution-types = { path = "../../evm/execution-types" }
+
 # Cryptography
 blake3 = "1.5"
 sha3 = "0.10"

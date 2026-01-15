@@ -6833,6 +6833,11 @@ dependencies = [
  "alloy-primitives",
  "blake3",
  "proptest",
+ "reth-chainspec",
+ "reth-consensus",
+ "reth-consensus-common",
+ "reth-execution-types",
+ "reth-primitives-traits",
  "sha3",
  "thiserror 2.0.17",
 ]
@@ -6842,7 +6847,14 @@ name = "permia-node"
 version = "0.1.0"
 dependencies = [
  "alloy-primitives",
+ "eyre",
  "permia-consensus",
+ "reth-chainspec",
+ "reth-consensus",
+ "reth-ethereum-primitives",
+ "reth-node-api",
+ "reth-node-builder",
+ "reth-primitives-traits",
  "tokio",
 ]
 

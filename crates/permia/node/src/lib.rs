@@ -8,7 +8,7 @@
 pub mod consensus;
 
 pub use consensus::PermiaConsensusBuilder;
-pub use permia_consensus::{PermiaConsensus, PermiaConsensusError, BLOCK_TIME_MS};
+pub use permia_consensus::{PermiaConsensus, PermiaConsensusError, PermiaPoWConsensus, BLOCK_TIME_MS};
 
 #[cfg(test)]
 mod tests {
