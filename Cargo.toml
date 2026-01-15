@@ -184,6 +184,7 @@ members = [
     "crates/permia/node",
     "crates/permia/cli",
     "crates/permia/miner",
+    "crates/permia/finality",
     "bin/permia",
 ]
 default-members = ["bin/reth"]

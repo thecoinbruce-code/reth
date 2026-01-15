@@ -6845,6 +6845,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "permia-finality"
+version = "0.1.0"
+dependencies = [
+ "alloy-consensus",
+ "alloy-primitives",
+ "k256",
+ "permia-consensus",
+ "serde",
+ "thiserror 2.0.17",
+ "tokio",
+ "tracing",
+]
+
+[[package]]
 name = "permia-miner"
 version = "0.1.0"
 dependencies = [
