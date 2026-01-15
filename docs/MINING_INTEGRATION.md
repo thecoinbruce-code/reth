@@ -117,6 +117,33 @@ For devnet testing, mining is demonstrated but blocks show as `0x0` in RPC
 because they're not submitted to the chain. The mining hashrate (~35K H/s)
 and block discovery is working correctly.
 
+## P2P Sync Considerations
+
+Reth is designed for Proof-of-Stake where blocks come from the consensus layer
+via Engine API, not from P2P gossip. For Permia's PoW model:
+
+### Current Limitation
+- Nodes connect via P2P (peer count shows connection)
+- But blocks are NOT propagated via P2P gossip
+- Each node in dev mode produces blocks locally via LocalMiner
+
+### Solution Path
+To enable true P2P block sync for PermiaHash PoW:
+
+1. **Custom Block Propagation**: Implement block announcement/request handlers
+   that validate PermiaHash PoW before accepting blocks from peers.
+
+2. **Consensus Integration**: Replace Reth's beacon consensus with PermiaHash
+   validation in the block import pipeline.
+
+3. **Block Gossip**: Enable traditional PoW-style block gossip where miners
+   broadcast new blocks and peers validate/import them.
+
+### Files to Modify for P2P PoW
+- `crates/net/eth-wire/` - Block announcement messages
+- `crates/net/network/` - Block propagation handlers
+- `crates/consensus/consensus/` - Block validation interface
+
 ## Related Files
 
 - `crates/permia/miner/src/node_miner.rs` - Mining task

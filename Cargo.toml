@@ -187,6 +187,7 @@ members = [
     "crates/permia/finality",
     "crates/permia/services",
     "crates/permia/genesis",
+    "crates/permia/payload",
     "bin/permia",
 ]
 default-members = ["bin/reth"]

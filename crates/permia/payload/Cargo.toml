@@ -1,0 +1,36 @@
+[package]
+name = "permia-payload"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Permia payload builder with PermiaHash PoW"
+
+[lints]
+workspace = true
+
+[dependencies]
+# Permia
+permia-consensus = { path = "../consensus" }
+
+# Reth
+reth-basic-payload-builder = { path = "../../payload/basic" }
+reth-chainspec = { path = "../../chainspec" }
+reth-ethereum-payload-builder = { path = "../../ethereum/payload" }
+reth-ethereum-primitives = { path = "../../ethereum/primitives" }
+reth-evm = { path = "../../evm/evm" }
+reth-evm-ethereum = { path = "../../ethereum/evm" }
+reth-payload-builder = { path = "../../payload/builder" }
+reth-payload-builder-primitives = { path = "../../payload/builder-primitives" }
+reth-payload-primitives = { path = "../../payload/primitives" }
+reth-primitives-traits = { path = "../../primitives-traits" }
+reth-storage-api = { path = "../../storage/storage-api" }
+reth-transaction-pool = { path = "../../transaction-pool" }
+
+# Alloy
+alloy-primitives.workspace = true
+
+# Tracing
+tracing.workspace = true
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["rt-multi-thread", "macros"] }

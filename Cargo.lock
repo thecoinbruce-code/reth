@@ -6908,6 +6908,28 @@ dependencies = [
 ]
 
 [[package]]
+name = "permia-payload"
+version = "0.1.0"
+dependencies = [
+ "alloy-primitives",
+ "permia-consensus",
+ "reth-basic-payload-builder",
+ "reth-chainspec",
+ "reth-ethereum-payload-builder",
+ "reth-ethereum-primitives",
+ "reth-evm",
+ "reth-evm-ethereum",
+ "reth-payload-builder",
+ "reth-payload-builder-primitives",
+ "reth-payload-primitives",
+ "reth-primitives-traits",
+ "reth-storage-api",
+ "reth-transaction-pool",
+ "tokio",
+ "tracing",
+]
+
+[[package]]
 name = "permia-services"
 version = "0.1.0"
 dependencies = [
