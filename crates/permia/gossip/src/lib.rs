@@ -38,9 +38,11 @@
 
 #![cfg_attr(not(test), warn(unused_crate_dependencies))]
 
+mod announcer;
 mod block_import;
 mod error;
 
+pub use announcer::{PermiaBlockAnnouncer, spawn_block_announcer};
 pub use block_import::PermiaPoWBlockImport;
 pub use error::PermiaGossipError;
 

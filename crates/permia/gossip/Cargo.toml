@@ -13,8 +13,10 @@ workspace = true
 permia-consensus = { path = "../consensus" }
 
 # Reth
+reth-chain-state = { path = "../../chain-state" }
 reth-consensus = { path = "../../consensus/consensus" }
 reth-eth-wire = { path = "../../net/eth-wire" }
+reth-ethereum-primitives = { path = "../../ethereum/primitives" }
 reth-network = { path = "../../net/network" }
 reth-network-peers = { path = "../../net/peers" }
 reth-primitives-traits = { path = "../../primitives-traits" }
@@ -22,6 +24,10 @@ reth-provider = { path = "../../storage/provider" }
 
 # Alloy
 alloy-primitives.workspace = true
+
+# Async
+tokio = { workspace = true, features = ["sync"] }
+tokio-stream.workspace = true
 
 # Tracing
 tracing.workspace = true

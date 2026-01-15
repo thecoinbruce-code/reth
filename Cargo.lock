@@ -6872,14 +6872,17 @@ version = "0.1.0"
 dependencies = [
  "alloy-primitives",
  "permia-consensus",
+ "reth-chain-state",
  "reth-consensus",
  "reth-eth-wire",
+ "reth-ethereum-primitives",
  "reth-network",
  "reth-network-peers",
  "reth-primitives-traits",
  "reth-provider",
  "thiserror 2.0.17",
  "tokio",
+ "tokio-stream",
  "tracing",
 ]
 
