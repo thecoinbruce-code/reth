@@ -6859,6 +6859,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "permia-genesis"
+version = "0.1.0"
+dependencies = [
+ "alloy-genesis",
+ "alloy-primitives",
+ "permia-chainspec",
+ "reth-chainspec",
+ "serde",
+ "serde_json",
+ "tempfile",
+ "thiserror 2.0.17",
+]
+
+[[package]]
 name = "permia-miner"
 version = "0.1.0"
 dependencies = [

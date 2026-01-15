@@ -1,0 +1,25 @@
+[package]
+name = "permia-genesis"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Permia genesis block creation and chain initialization"
+
+[dependencies]
+# Permia
+permia-chainspec = { path = "../chainspec" }
+
+# Alloy
+alloy-primitives = { workspace = true, features = ["serde"] }
+alloy-genesis.workspace = true
+
+# Reth
+reth-chainspec.workspace = true
+
+# Utilities
+thiserror.workspace = true
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+[dev-dependencies]
+tempfile = "3.10"
