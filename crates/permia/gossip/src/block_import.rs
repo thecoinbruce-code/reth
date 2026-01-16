@@ -56,7 +56,18 @@ where
         let header = block.block.header();
         let difficulty = header.difficulty;
         
-        // Check minimum difficulty
+        // Dev mode / PoS blocks have difficulty=0, skip PoW validation for these
+        // This allows sync nodes to accept blocks from dev mode miners
+        if difficulty.is_zero() {
+            debug!(
+                target: "permia::gossip",
+                block_number = %header.number,
+                "Accepting dev mode block (difficulty=0)"
+            );
+            return Ok(());
+        }
+        
+        // Check minimum difficulty for PoW blocks
         let min_difficulty = self.consensus.min_difficulty();
         if difficulty < min_difficulty {
             return Err(PermiaGossipError::DifficultyTooLow {

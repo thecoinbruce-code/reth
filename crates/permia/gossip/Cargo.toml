@@ -15,15 +15,18 @@ permia-consensus = { path = "../consensus" }
 # Reth
 reth-chain-state = { path = "../../chain-state" }
 reth-consensus = { path = "../../consensus/consensus" }
+reth-engine-primitives = { path = "../../engine/primitives" }
 reth-eth-wire = { path = "../../net/eth-wire" }
 reth-ethereum-primitives = { path = "../../ethereum/primitives" }
 reth-network = { path = "../../net/network" }
 reth-network-peers = { path = "../../net/peers" }
+reth-payload-primitives = { path = "../../payload/primitives" }
 reth-primitives-traits = { path = "../../primitives-traits" }
 reth-provider = { path = "../../storage/provider" }
 
 # Alloy
 alloy-primitives.workspace = true
+alloy-rpc-types-engine.workspace = true
 
 # Async
 tokio = { workspace = true, features = ["sync"] }
@@ -34,6 +37,7 @@ tracing.workspace = true
 
 # Error handling
 thiserror.workspace = true
+eyre.workspace = true
 
 [dev-dependencies]
 tokio = { workspace = true, features = ["rt-multi-thread", "macros"] }

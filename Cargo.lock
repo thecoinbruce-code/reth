@@ -6873,13 +6873,17 @@ name = "permia-gossip"
 version = "0.1.0"
 dependencies = [
  "alloy-primitives",
+ "alloy-rpc-types-engine",
+ "eyre",
  "permia-consensus",
  "reth-chain-state",
  "reth-consensus",
+ "reth-engine-primitives",
  "reth-eth-wire",
  "reth-ethereum-primitives",
  "reth-network",
  "reth-network-peers",
+ "reth-payload-primitives",
  "reth-primitives-traits",
  "reth-provider",
  "thiserror 2.0.17",

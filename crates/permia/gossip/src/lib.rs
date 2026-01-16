@@ -41,10 +41,12 @@
 mod announcer;
 mod block_import;
 mod error;
+mod p2p_importer;
 
 pub use announcer::{PermiaBlockAnnouncer, spawn_block_announcer};
 pub use block_import::PermiaPoWBlockImport;
 pub use error::PermiaGossipError;
+pub use p2p_importer::{p2p_block_channel, P2PBlockReceiver, P2PBlockSender, PermiaP2PImporter};
 
 /// Re-export core types
 pub use reth_network::import::{BlockImport, BlockImportEvent, BlockValidation, NewBlockEvent};
